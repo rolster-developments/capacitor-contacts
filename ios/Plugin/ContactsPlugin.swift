@@ -2,8 +2,8 @@ import Foundation
 import Capacitor
 import Contacts
 
-@objc(Contacts)
-public class Contacts: CAPPlugin {
+@objc(ContactsPlugin)
+public class ContactsPlugin: CAPPlugin {
 
     private let birthdayFormatter = DateFormatter()
 
@@ -12,13 +12,6 @@ public class Contacts: CAPPlugin {
         // which is what birthdays in Contacts are set to.
         birthdayFormatter.timeZone = TimeZone(identifier: "UTC")
         birthdayFormatter.dateFormat = "YYYY-MM-dd"
-    }
-
-    @objc func getPermissions(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.success([
-            "value": value
-        ])
     }
 
     @objc func getPermissions(_ call: CAPPluginCall) {
@@ -38,15 +31,15 @@ public class Contacts: CAPPlugin {
     }
 
     @objc func getContacts(_ call: CAPPluginCall) {
-        var contactsArray: [PluginCallResultData] = []
+        var contactsArray: [PluginResultData] = []
         Permissions.contactPermission { granted in
             if granted {
                 do {
                     let contacts = try Contacts.getContactFromCNContact()
 
                     for contact in contacts {
-                        var phoneNumbers: [PluginCallResultData] = []
-                        var emails: [PluginCallResultData] = []
+                        var phoneNumbers: [PluginResultData] = []
+                        var emails: [PluginResultData] = []
                         for number in contact.phoneNumbers {
                             let numberToAppend = number.value.stringValue
                             let label = number.label ?? ""
@@ -67,7 +60,7 @@ public class Contacts: CAPPlugin {
                             ])
                         }
 
-                        var contactResult: PluginCallResultData = [
+                        var contactResult: PluginResultData = [
                             "contactId": contact.identifier,
                             "displayName": "\(contact.givenName) \(contact.familyName)",
                             "phoneNumbers": phoneNumbers,

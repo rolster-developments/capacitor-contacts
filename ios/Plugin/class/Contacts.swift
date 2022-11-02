@@ -1,10 +1,8 @@
-
 import Capacitor
 import Foundation
 import Contacts
 
 class Contacts {
-
     class func getContactFromCNContact() throws -> [CNContact] {
         let contactStore = CNContactStore()
 
@@ -36,25 +34,4 @@ class Contacts {
 
         return results
     }
-
-    class func findContacts(withName: String) throws -> [CNContact] {
-        var contacts = [CNContact]()
-        let predicate: NSPredicate = CNContact.predicateForContacts(matchingName: withName)
-        let contactStore = CNContactStore()
-        contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: [CNContactVCardSerialization.descriptorForRequiredKeys()])
-        return contacts
-    }
-
-    class func getPostalAddressFromAddress(jsAddress: JSObject) -> CNMutablePostalAddress {
-        let address = CNMutablePostalAddress()
-
-        address.street = jsAddress["street"] as? String ?? ""
-        address.state = jsAddress["state"] as? String ?? ""
-        address.city = jsAddress["city"] as? String ?? ""
-        address.country = jsAddress["country"] as? String ?? ""
-        address.postalCode = jsAddress["postalCode"] as? String ?? ""
-
-        return address
-    }
-
 }

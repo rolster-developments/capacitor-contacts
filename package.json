@@ -1,6 +1,6 @@
 {
   "name": "@xofttion-enterprise/capacitor-contacts",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Admin contacts of Device",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
@@ -37,7 +37,7 @@
     "dist/",
     "ios/",
     "android/",
-    "XofttionEnterpriseContacts.podspec"
+    "XofttionEnterpriseCapacitorContacts.podspec"
   ],
   "keywords": [
     "capacitor",
