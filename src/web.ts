@@ -1,61 +1,28 @@
 import { WebPlugin } from '@capacitor/core';
-import { ContactList, ContactsPlugin, PermissionsStatus } from './definitions';
+import {
+  Contact,
+  ContactList,
+  ContactsPlugin,
+  PermissionsStatus
+} from './definitions';
 
 export class ContactsWeb extends WebPlugin implements ContactsPlugin {
-  constructor() {
+  constructor(private _contacts: Contact[] = [], private _granted = true) {
     super({
       name: 'Contacts',
       platforms: ['web']
     });
   }
 
-  public async getPermissions(): Promise<PermissionsStatus> {
+  public async grantPermissions(): Promise<PermissionsStatus> {
     return {
-      granted: false
+      granted: this._granted
     };
   }
 
   public async getContacts(): Promise<ContactList> {
     return {
-      contacts: [
-        {
-          contactId: '30199105',
-          displayName: 'Daniel Andrés Castillo Pedroza',
-          phoneNumbers: [
-            {
-              number: '3168213597',
-              label: 'Personal'
-            },
-            {
-              number: '3004636444',
-              label: 'Work'
-            }
-          ],
-          emails: []
-        },
-        {
-          contactId: '52315521',
-          displayName: 'Ricardo Andrés Urrego',
-          phoneNumbers: [
-            {
-              number: '3025668712',
-              label: 'Personal'
-            }
-          ],
-          emails: []
-        },
-        {
-          contactId: '62511202',
-          displayName: 'Cristian Yair Melgarejo Florez',
-          phoneNumbers: [
-            {
-              number: '318251341',
-              label: 'Personal'
-            }
-          ],
-          emails: []
-        }
-      ]
+      contacts: this._contacts
     };
   }
 }
