@@ -5,7 +5,7 @@ declare module '@capacitor/core' {
 }
 
 export interface ContactsPlugin {
-  getPermissions(): Promise<PermissionsStatus>;
+  grantPermissions(): Promise<PermissionsStatus>;
   getContacts(): Promise<ContactList>;
 }
 
