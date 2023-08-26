@@ -1,20 +1,11 @@
-declare module '@capacitor/core' {
-  interface PluginRegistry {
-    Contacts: ContactsPlugin;
-  }
+export interface PhoneNumber {
+  label?: string;
+  number?: string;
 }
 
-export interface ContactsPlugin {
-  grantPermissions(): Promise<PermissionsStatus>;
-  getContacts(): Promise<ContactList>;
-}
-
-export interface PermissionsStatus {
-  granted: boolean;
-}
-
-export interface ContactList {
-  contacts: Contact[];
+export interface EmailAddress {
+  label?: string;
+  address?: string;
 }
 
 export interface Contact {
@@ -28,12 +19,15 @@ export interface Contact {
   birthday?: string;
 }
 
-export interface PhoneNumber {
-  label?: string;
-  number?: string;
+export interface ContactList {
+  contacts: Contact[];
 }
 
-export interface EmailAddress {
-  label?: string;
-  address?: string;
+export interface PermissionsStatus {
+  granted: boolean;
+}
+
+export interface ContactsPlugin {
+  grantPermissions(): Promise<PermissionsStatus>;
+  getContacts(): Promise<ContactList>;
 }
