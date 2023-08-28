@@ -22,7 +22,7 @@
     "lint": "npm run eslint && npm run prettier -- --check",
     "eslint": "eslint . --ext ts",
     "prettier": "prettier \"**/*.{css,html,ts,js}\"",
-    "docgen": "docgen --api NativeBiometricPlugin --output-readme README.md --output-json dist/docs.json",
+    "docgen": "docgen --api ContactsPlugin --output-readme README.md --output-json dist/docs.json",
     "clean": "rimraf ./dist",
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.js",
     "watch": "tsc --watch",
