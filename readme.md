@@ -1,3 +1,7 @@
+# Rolster Contacts
+
+Use plugin for manage contact list of Device.
+
 ### iOS
 
 For iOS you need to set a usage description in your info.plist file. (Privacy Setting)
@@ -21,22 +25,20 @@ For Android you have to add the permissions in your AndroidManifest.xml. Add the
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 ```
 
-Next import the capContacts class to your MainActivity
+And register the plugin by adding it to you MainActivity's onCreate:
 
 ```java
-// Initializes the Bridge
-this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-  // Additional plugins you've installed go here
-  // Ex: add(TotallyAwesomePlugin.class);
-  add(Contacts.class);
-}});
+import com.rolster.capacitor.contacts.Contacts;
+
+public class MainActivity extends BridgeActivity {
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    registerPlugin(Contacts.class);
+    // Others register plugins
+
+    super.onCreate(savedInstanceState);
+  }
+}
 ```
 
-Make sure to import it properly as well.
-
-```java
-import com.xofttion.capacitor.plugins.Contacts;
-
-```
-
-**NOTE**: On Android you have to ask for permission first, before you can fetch the contacts. Use the `getPermissions()` method before you try to fetch contacts using `getContacts()`.
+**NOTE**: On Android you have to ask for permission first, before you can fetch the contacts. Use the `grantPermissions()` method before you try to fetch contacts using `getContacts()`.

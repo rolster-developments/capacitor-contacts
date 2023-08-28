@@ -4,7 +4,7 @@ export default {
     {
       file: 'dist/plugin.js',
       format: 'iife',
-      name: 'capacitorXofttionEnterpriseContactsPlugin',
+      name: 'RolsterContactsPlugin',
       globals: {
         '@capacitor/core': 'capacitorExports'
       },
