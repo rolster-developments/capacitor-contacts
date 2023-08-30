@@ -6,5 +6,5 @@ const Contacts = registerPlugin<ContactsPlugin>('Contacts', {
 });
 
 export * from './definitions';
-export { configWebDataPlugin } from './web';
+export { setWebPluginResults } from './web';
 export { Contacts };

@@ -1,6 +1,7 @@
-package com.xofttion.capacitor.plugins;
+package com.rolster.capacitor.contacts;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
@@ -12,20 +13,28 @@ import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.util.Base64;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.getcapacitor.NativePlugin;
+import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.annotation.Permission;
+import com.getcapacitor.annotation.PermissionCallback;
 import java.util.HashMap;
 import org.json.JSONException;
 
-@NativePlugin(
-  requestCodes = { Contacts.REQUEST_CODE },
-  permissions = { Manifest.permission.READ_CONTACTS }
+@CapacitorPlugin(
+  name = "Contacts",
+  permissions = {
+    @Permission(
+      alias = ContactsPlugin.CONTACTS_ALIAS,
+      strings = { Manifest.permission.READ_CONTACTS }
+    )
+  }
 )
-public class Contacts extends Plugin {
+public class ContactsPlugin extends Plugin {
 
-  public static final int REQUEST_CODE = 0x1651;
+  public static final String CONTACTS_ALIAS = "contacts";
 
   private static final String CONTACT_ID = "contactId";
   private static final String EMAILS = "emails";
@@ -41,8 +50,8 @@ public class Contacts extends Plugin {
   private static final String BIRTHDAY = "birthday";
 
   @PluginMethod
-  public void getPermissions(PluginCall call) {
-    if (!hasRequiredPermissions()) {
+  public void hasPermissions(PluginCall call) {
+    if (hasPermission()) {
       requestPermissions(call);
     } else {
       JSObject result = new JSObject();
@@ -51,30 +60,7 @@ public class Contacts extends Plugin {
     }
   }
 
-  @Override
-  protected void handleRequestPermissionsResult(
-    int requestCode,
-    String[] permissions,
-    int[] grantResults
-  ) {
-    super.handleRequestPermissionsResult(
-      requestCode,
-      permissions,
-      grantResults
-    );
-
-    PluginCall savedCall = getSavedCall();
-    JSObject result = new JSObject();
-
-    if (!hasRequiredPermissions()) {
-      result.put("granted", false);
-      savedCall.resolve(result);
-    } else {
-      result.put("granted", true);
-      savedCall.resolve(result);
-    }
-  }
-
+  @SuppressLint("Range")
   @PluginMethod
   public void getContacts(PluginCall call) {
     JSArray jsContacts = new JSArray();
@@ -125,14 +111,10 @@ public class Contacts extends Plugin {
         JSObject jsContact = new JSObject();
 
         if (!contactsById.containsKey(contactId)) {
-          // this contact does not yet exist in HashMap,
-          // so put it to the HashMap
-
           jsContact.put(CONTACT_ID, contactId);
+
           String displayName = contactsCursor.getString(
-            contactsCursor.getColumnIndex(
-              ContactsContract.Contacts.DISPLAY_NAME
-            )
+            contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
           );
 
           jsContact.put(DISPLAY_NAME, displayName);
@@ -143,8 +125,6 @@ public class Contacts extends Plugin {
 
           jsContacts.put(jsContact);
         } else {
-          // this contact already exists,
-          // retrieve it
           jsContact = contactsById.get(contactId);
         }
 
@@ -202,6 +182,7 @@ public class Contacts extends Plugin {
                   ContactsContract.CommonDataKinds.Contactables.TYPE
                 )
               );
+
               if (eventType == Event.TYPE_BIRTHDAY) {
                 jsContact.put(BIRTHDAY, data);
               }
@@ -209,9 +190,11 @@ public class Contacts extends Plugin {
             // organization
             case Organization.CONTENT_ITEM_TYPE:
               jsContact.put(ORGANIZATION_NAME, data);
+
               String organizationRole = contactsCursor.getString(
                 contactsCursor.getColumnIndex(Organization.TITLE)
               );
+
               if (organizationRole != null) {
                 jsContact.put(ORGANIZATION_ROLE, organizationRole);
               }
@@ -219,10 +202,9 @@ public class Contacts extends Plugin {
             // photo
             case Photo.CONTENT_ITEM_TYPE:
               byte[] thumbnailPhoto = contactsCursor.getBlob(
-                contactsCursor.getColumnIndex(
-                  ContactsContract.Contacts.Photo.PHOTO
-                )
+                contactsCursor.getColumnIndex(ContactsContract.Contacts.Photo.PHOTO)
               );
+
               if (thumbnailPhoto != null) {
                 String encodedThumbnailPhoto = Base64.encodeToString(
                   thumbnailPhoto,
@@ -240,12 +222,26 @@ public class Contacts extends Plugin {
         }
       }
     }
+
     if (contactsCursor != null) {
       contactsCursor.close();
     }
 
     JSObject result = new JSObject();
     result.put("contacts", jsContacts);
+    call.resolve(result);
+  }
+
+  @PermissionCallback
+  private void contactsPermissionsCallback(PluginCall call) {
+    JSObject result = new JSObject();
+
+    if (hasPermission()) {
+      result.put("granted", true);
+    } else {
+      result.put("granted", false);
+    }
+
     call.resolve(result);
   }
 
@@ -309,5 +305,9 @@ public class Contacts extends Plugin {
       default:
         return defaultLabel;
     }
+  }
+
+  private boolean hasPermission() {
+    return getPermissionState(CONTACTS_ALIAS) == PermissionState.GRANTED;
   }
 }

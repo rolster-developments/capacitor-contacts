@@ -14,7 +14,7 @@ public class ContactsPlugin: CAPPlugin {
         birthdayFormatter.dateFormat = "YYYY-MM-dd"
     }
 
-    @objc func getPermissions(_ call: CAPPluginCall) {
+    @objc func hasPermissions(_ call: CAPPluginCall) {
         print("checkPermission was triggered in Swift")
         Permissions.contactPermission { granted in
             switch granted {

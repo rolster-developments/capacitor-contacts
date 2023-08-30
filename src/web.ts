@@ -6,37 +6,34 @@ import {
   PermissionsStatus
 } from './definitions';
 
-interface WebDataPlugin {
+interface WebPluginResults {
   contacts: Contact[];
   granted: boolean;
 }
 
-let webDataPlugin: WebDataPlugin = {
+let webResults: WebPluginResults = {
   contacts: [],
   granted: false
 };
 
-export function configWebDataPlugin(dataPlugin: Partial<WebDataPlugin>): void {
-  webDataPlugin = { ...webDataPlugin, ...dataPlugin };
+export function setWebPluginResults(results: Partial<WebPluginResults>): void {
+  webResults = { ...webResults, ...results };
 }
 
 export class ContactsWeb extends WebPlugin implements ContactsPlugin {
   constructor() {
-    super({
-      name: 'Contacts',
-      platforms: ['web']
-    });
+    super();
   }
 
-  public async grantPermissions(): Promise<PermissionsStatus> {
-    return {
-      granted: webDataPlugin.granted
-    };
+  public async hasPermissions(): Promise<PermissionsStatus> {
+    const { granted } = webResults;
+
+    return { granted };
   }
 
   public async getContacts(): Promise<ContactList> {
-    return {
-      contacts: webDataPlugin.contacts
-    };
+    const { contacts } = webResults;
+
+    return { contacts };
   }
 }

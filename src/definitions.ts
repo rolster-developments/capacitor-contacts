@@ -28,6 +28,6 @@ export interface PermissionsStatus {
 }
 
 export interface ContactsPlugin {
-  grantPermissions(): Promise<PermissionsStatus>;
+  hasPermissions(): Promise<PermissionsStatus>;
   getContacts(): Promise<ContactList>;
 }
