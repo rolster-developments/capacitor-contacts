@@ -2,6 +2,14 @@
 
 Use plugin for manage contact list of Device.
 
+## Installation
+
+Package only supports Capacitor 5
+
+```
+npm i @rolster/capacitor-contacts
+```
+
 ### iOS Config
 
 To access the contact list make sure you provide a value for NSContactsUsageDescription; otherwise your app may crash on iOS devices. You should add something like the following example to App/info.plist:
