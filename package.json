@@ -1,6 +1,6 @@
 {
   "name": "@rolster/capacitor-contacts",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Plugin to manage contact list",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -29,10 +29,10 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@capacitor/android": "~5.0.0",
-    "@capacitor/core": "~5.0.0",
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
     "@capacitor/docgen": "^0.0.18",
-    "@capacitor/ios": "~5.0.0",
+    "@capacitor/ios": "^5.0.0",
     "eslint": "^7.11.0",
     "prettier": "~2.3.0",
     "prettier-plugin-java": "~1.0.2",
@@ -41,7 +41,7 @@
     "typescript": "~4.1.5"
   },
   "peerDependencies": {
-    "@capacitor/core": "~5.0.0"
+    "@capacitor/core": "^5.0.0"
   },
   "capacitor": {
     "ios": {

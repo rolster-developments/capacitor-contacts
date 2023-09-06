@@ -1,25 +1,19 @@
-# Rolster Contacts
+# Rolster Capacitor Contacts
 
 Use plugin for manage contact list of Device.
 
-### iOS
+### iOS Config
 
-For iOS you need to set a usage description in your info.plist file. (Privacy Setting)
-Open xCode search for your info.plist file and press the tiny "+". Add the following entry:
+To access the contact list make sure you provide a value for NSContactsUsageDescription; otherwise your app may crash on iOS devices. You should add something like the following example to App/info.plist:
 
-```
-Privacy - Contacts Usage Description
-```
-
-Give it a value like:
-
-```
-"We need access to your contacts in order to do something."
+```xml
+<key>NSContactsUsageDescription</key>
+<string>We need access to your contacts in order to do something.</string>
 ```
 
-### Android Notes
+### Android Config
 
-For Android you have to add the permissions in your AndroidManifest.xml. Add the following permissions before the closing of the "manifest" tag.
+For Android you have to add the permissions in your `AndroidManifest.xml`. Add the following permissions before the closing of the `manifest` tag.
 
 ```xml
 <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -41,4 +35,4 @@ public class MainActivity extends BridgeActivity {
 }
 ```
 
-**NOTE**: On Android you have to ask for permission first, before you can fetch the contacts. Use the `grantPermissions()` method before you try to fetch contacts using `getContacts()`.
+**NOTE**: On Android you have to ask for permission first, before you can fetch the contacts. Use the `hasPermissions()` method before you try to fetch contacts using `getContacts()`.

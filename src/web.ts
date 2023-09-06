@@ -25,15 +25,15 @@ export class ContactsWeb extends WebPlugin implements ContactsPlugin {
     super();
   }
 
-  public async hasPermissions(): Promise<PermissionsStatus> {
+  public hasPermissions(): Promise<PermissionsStatus> {
     const { granted } = webResults;
 
-    return { granted };
+    return Promise.resolve({ granted });
   }
 
-  public async getContacts(): Promise<ContactList> {
+  public getContacts(): Promise<ContactList> {
     const { contacts } = webResults;
 
-    return { contacts };
+    return Promise.resolve({ contacts });
   }
 }
