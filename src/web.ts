@@ -6,18 +6,20 @@ import {
   PermissionsStatus
 } from './definitions';
 
-interface WebPluginResults {
-  contacts: Contact[];
+interface PluginResults {
   granted: boolean;
+  contacts: Contact[];
 }
 
-let webResults: WebPluginResults = {
-  contacts: [],
-  granted: false
+const results: { data: PluginResults } = {
+  data: {
+    granted: false,
+    contacts: []
+  }
 };
 
-export function setWebPluginResults(results: Partial<WebPluginResults>): void {
-  webResults = { ...webResults, ...results };
+export function setPluginResults(resultsPartial: Partial<PluginResults>): void {
+  results.data = { ...results.data, ...resultsPartial };
 }
 
 export class ContactsWeb extends WebPlugin implements ContactsPlugin {
@@ -26,13 +28,13 @@ export class ContactsWeb extends WebPlugin implements ContactsPlugin {
   }
 
   public hasPermissions(): Promise<PermissionsStatus> {
-    const { granted } = webResults;
+    const { granted } = results.data;
 
     return Promise.resolve({ granted });
   }
 
   public getContacts(): Promise<ContactList> {
-    const { contacts } = webResults;
+    const { contacts } = results.data;
 
     return Promise.resolve({ contacts });
   }

@@ -51,7 +51,7 @@ public class ContactsPlugin extends Plugin {
 
   @PluginMethod
   public void hasPermissions(PluginCall call) {
-    if (hasPermission()) {
+    if (!hasContactReadPermmisionGranted()) {
       requestPermissions(call);
     } else {
       JSObject result = new JSObject();
@@ -233,10 +233,10 @@ public class ContactsPlugin extends Plugin {
   }
 
   @PermissionCallback
-  private void contactsPermissionsCallback(PluginCall call) {
+  private void readContactsPermissionCallback(PluginCall call) {
     JSObject result = new JSObject();
 
-    if (hasPermission()) {
+    if (hasContactReadPermmisionGranted()) {
       result.put("granted", true);
     } else {
       result.put("granted", false);
@@ -307,7 +307,7 @@ public class ContactsPlugin extends Plugin {
     }
   }
 
-  private boolean hasPermission() {
+  private boolean hasContactReadPermmisionGranted() {
     return getPermissionState(CONTACTS_ALIAS) == PermissionState.GRANTED;
   }
 }
