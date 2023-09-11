@@ -2,7 +2,7 @@ import { registerPlugin } from '@capacitor/core';
 import { ContactsPlugin } from './definitions';
 
 const Contacts = registerPlugin<ContactsPlugin>('Contacts', {
-  web: () => import('./web').then((m) => new m.ContactsWeb())
+  web: () => import('./web').then(({ ContactsWeb }) => new ContactsWeb())
 });
 
 export * from './definitions';

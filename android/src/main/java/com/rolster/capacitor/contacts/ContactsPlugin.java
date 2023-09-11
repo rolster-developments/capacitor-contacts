@@ -27,14 +27,14 @@ import org.json.JSONException;
   name = "Contacts",
   permissions = {
     @Permission(
-      alias = ContactsPlugin.CONTACTS_ALIAS,
+      alias = ContactsPlugin.READ_CONTACTS,
       strings = { Manifest.permission.READ_CONTACTS }
     )
   }
 )
 public class ContactsPlugin extends Plugin {
 
-  public static final String CONTACTS_ALIAS = "contacts";
+  public static final String READ_CONTACTS = "readContacts";
 
   private static final String CONTACT_ID = "contactId";
   private static final String EMAILS = "emails";
@@ -51,7 +51,7 @@ public class ContactsPlugin extends Plugin {
 
   @PluginMethod
   public void hasPermissions(PluginCall call) {
-    if (!hasContactReadPermmisionGranted()) {
+    if (!hasContactsReadPermisionGranted()) {
       requestPermissions(call);
     } else {
       JSObject result = new JSObject();
@@ -236,7 +236,7 @@ public class ContactsPlugin extends Plugin {
   private void readContactsPermissionCallback(PluginCall call) {
     JSObject result = new JSObject();
 
-    if (hasContactReadPermmisionGranted()) {
+    if (hasContactsReadPermisionGranted()) {
       result.put("granted", true);
     } else {
       result.put("granted", false);
@@ -307,7 +307,7 @@ public class ContactsPlugin extends Plugin {
     }
   }
 
-  private boolean hasContactReadPermmisionGranted() {
-    return getPermissionState(CONTACTS_ALIAS) == PermissionState.GRANTED;
+  private boolean hasContactsReadPermisionGranted() {
+    return getPermissionState(READ_CONTACTS) == PermissionState.GRANTED;
   }
 }
