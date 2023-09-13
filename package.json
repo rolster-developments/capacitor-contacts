@@ -1,6 +1,6 @@
 {
   "name": "@rolster/capacitor-contacts",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Plugin to manage contact list",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

@@ -31,15 +31,15 @@ public class ContactsPlugin: CAPPlugin {
     }
 
     @objc func getContacts(_ call: CAPPluginCall) {
-        var contactsArray: [PluginResultData] = []
+        var contactsArray: [PluginCallResultData] = []
         Permissions.contactPermission { granted in
             if granted {
                 do {
                     let contacts = try Contacts.getContactFromCNContact()
 
                     for contact in contacts {
-                        var phoneNumbers: [PluginResultData] = []
-                        var emails: [PluginResultData] = []
+                        var phoneNumbers: [PluginCallResultData] = []
+                        var emails: [PluginCallResultData] = []
                         for number in contact.phoneNumbers {
                             let numberToAppend = number.value.stringValue
                             let label = number.label ?? ""
@@ -60,7 +60,7 @@ public class ContactsPlugin: CAPPlugin {
                             ])
                         }
 
-                        var contactResult: PluginResultData = [
+                        var contactResult: PluginCallResultData = [
                             "contactId": contact.identifier,
                             "displayName": "\(contact.givenName) \(contact.familyName)",
                             "phoneNumbers": phoneNumbers,
