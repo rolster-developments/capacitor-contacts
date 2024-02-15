@@ -25,6 +25,7 @@ export interface ContactList {
 
 export interface PermissionsStatus {
   granted: boolean;
+  readContacts?: string;
 }
 
 export interface ContactsPlugin {
