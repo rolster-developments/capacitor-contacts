@@ -30,7 +30,7 @@ public class ContactsPlugin: CAPPlugin {
         }
     }
 
-    @objc func getContacts(_ call: CAPPluginCall) {
+    @objc func request(_ call: CAPPluginCall) {
         var contactsArray: [PluginCallResultData] = []
         Permissions.contactPermission { granted in
             if granted {

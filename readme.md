@@ -4,7 +4,7 @@ Use plugin for manage contact list of Device.
 
 ## Installation
 
-Package only supports Capacitor 5
+Package only supports Capacitor 6
 
 ```
 npm i @rolster/capacitor-contacts
@@ -30,12 +30,12 @@ For Android you have to add the permissions in your `AndroidManifest.xml`. Add t
 And register the plugin by adding it to you MainActivity's onCreate:
 
 ```java
-import com.rolster.capacitor.contacts.Contacts;
+import com.rolster.capacitor.contacts.ContactsPlugin;
 
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    registerPlugin(Contacts.class);
+    registerPlugin(ContactsPlugin.class);
     // Others register plugins
 
     super.onCreate(savedInstanceState);
@@ -43,4 +43,4 @@ public class MainActivity extends BridgeActivity {
 }
 ```
 
-**NOTE**: On Android you have to ask for permission first, before you can fetch the contacts. Use the `hasPermissions()` method before you try to fetch contacts using `getContacts()`.
+**NOTE**: On Android you have to ask for permission first, before you can fetch the contacts. Use the `hasPermissions()` method before you try to fetch contacts using `request()`.

@@ -61,7 +61,7 @@ public class ContactsPlugin extends Plugin {
 
   @SuppressLint("Range")
   @PluginMethod
-  public void getContacts(PluginCall call) {
+  public void request(PluginCall call) {
     JSArray jsContacts = new JSArray();
 
     ContentResolver contentResolver = getContext().getContentResolver();

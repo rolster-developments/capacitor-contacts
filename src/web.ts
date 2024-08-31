@@ -1,34 +1,34 @@
 import { WebPlugin } from '@capacitor/core';
 import {
   Contact,
-  ContactList,
   ContactsPlugin,
-  PermissionsStatus
+  HasPermissionsResult,
+  RequestResult
 } from './definitions';
 
-interface ContactsWebData {
+interface ContactsMocks {
   granted: boolean;
   contacts: Contact[];
 }
 
-let contactsWebData: ContactsWebData = {
+let pluginMocks: ContactsMocks = {
   granted: true,
   contacts: []
 };
 
-export function setContactsWebData(data: Partial<ContactsWebData>): void {
-  contactsWebData = { ...contactsWebData, ...data };
+export function setContactsMocks(mocks: Partial<ContactsMocks>): void {
+  pluginMocks = { ...pluginMocks, ...mocks };
 }
 
 export class ContactsWeb extends WebPlugin implements ContactsPlugin {
-  public hasPermissions(): Promise<PermissionsStatus> {
-    const { granted } = contactsWebData;
+  public hasPermissions(): Promise<HasPermissionsResult> {
+    const { granted } = pluginMocks;
 
     return Promise.resolve({ granted });
   }
 
-  public getContacts(): Promise<ContactList> {
-    const { contacts, granted } = contactsWebData;
+  public request(): Promise<RequestResult> {
+    const { contacts, granted } = pluginMocks;
 
     return Promise.resolve({ contacts: granted ? contacts : [] });
   }

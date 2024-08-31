@@ -19,16 +19,16 @@ export interface Contact {
   birthday?: string;
 }
 
-export interface ContactList {
-  contacts: Contact[];
-}
-
-export interface PermissionsStatus {
+export interface HasPermissionsResult {
   granted: boolean;
   readContacts?: string;
 }
 
+export interface RequestResult {
+  contacts: Contact[];
+}
+
 export interface ContactsPlugin {
-  hasPermissions(): Promise<PermissionsStatus>;
-  getContacts(): Promise<ContactList>;
+  hasPermissions(): Promise<HasPermissionsResult>;
+  request(): Promise<RequestResult>;
 }
