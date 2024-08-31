@@ -33,7 +33,6 @@ import org.json.JSONException;
   }
 )
 public class ContactsPlugin extends Plugin {
-
   public static final String READ_CONTACTS = "readContacts";
 
   private static final String CONTACT_ID = "contactId";

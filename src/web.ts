@@ -6,36 +6,30 @@ import {
   PermissionsStatus
 } from './definitions';
 
-interface PluginResults {
+interface ContactsWebData {
   granted: boolean;
   contacts: Contact[];
 }
 
-const results: { data: PluginResults } = {
-  data: {
-    granted: false,
-    contacts: []
-  }
+let contactsWebData: ContactsWebData = {
+  granted: true,
+  contacts: []
 };
 
-export function setPluginResults(resultsPartial: Partial<PluginResults>): void {
-  results.data = { ...results.data, ...resultsPartial };
+export function setContactsWebData(data: Partial<ContactsWebData>): void {
+  contactsWebData = { ...contactsWebData, ...data };
 }
 
 export class ContactsWeb extends WebPlugin implements ContactsPlugin {
-  constructor() {
-    super();
-  }
-
   public hasPermissions(): Promise<PermissionsStatus> {
-    const { granted } = results.data;
+    const { granted } = contactsWebData;
 
     return Promise.resolve({ granted });
   }
 
   public getContacts(): Promise<ContactList> {
-    const { contacts } = results.data;
+    const { contacts, granted } = contactsWebData;
 
-    return Promise.resolve({ contacts });
+    return Promise.resolve({ contacts: granted ? contacts : [] });
   }
 }

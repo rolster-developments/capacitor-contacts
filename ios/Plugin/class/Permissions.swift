@@ -2,7 +2,6 @@ import Foundation
 import Contacts
 
 class Permissions {
-
     class func contactPermission(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
         let contactStore = CNContactStore()
 
