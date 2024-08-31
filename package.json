@@ -71,5 +71,8 @@
   },
   "bugs": {
     "url": "git+https://github.com/rolster-developments/capacitor-contacts.git.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
