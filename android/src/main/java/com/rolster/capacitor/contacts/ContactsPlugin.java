@@ -36,25 +36,37 @@ public class ContactsPlugin extends Plugin {
   public static final String READ_CONTACTS = "readContacts";
 
   private static final String CONTACT_ID = "contactId";
+
   private static final String EMAILS = "emails";
+
   private static final String EMAIL_LABEL = "label";
+
   private static final String EMAIL_ADDRESS = "address";
+
   private static final String PHONE_NUMBERS = "phoneNumbers";
+
   private static final String PHONE_LABEL = "label";
+
   private static final String PHONE_NUMBER = "number";
+
   private static final String DISPLAY_NAME = "displayName";
+
   private static final String PHOTO_THUMBNAIL = "photoThumbnail";
+
   private static final String ORGANIZATION_NAME = "organizationName";
+
   private static final String ORGANIZATION_ROLE = "organizationRole";
+
   private static final String BIRTHDAY = "birthday";
 
   @PluginMethod
-  public void hasPermissions(PluginCall call) {
-    if (!hasContactsReadPermisionGranted()) {
+  public void checkPermission(PluginCall call) {
+    if (!canReadContactsPermisionGranted()) {
       requestPermissions(call);
     } else {
       JSObject result = new JSObject();
       result.put("granted", true);
+
       call.resolve(result);
     }
   }
@@ -235,7 +247,7 @@ public class ContactsPlugin extends Plugin {
   private void readContactsPermissionCallback(PluginCall call) {
     JSObject result = new JSObject();
 
-    if (hasContactsReadPermisionGranted()) {
+    if (canReadContactsPermisionGranted()) {
       result.put("granted", true);
     } else {
       result.put("granted", false);
@@ -306,7 +318,7 @@ public class ContactsPlugin extends Plugin {
     }
   }
 
-  private boolean hasContactsReadPermisionGranted() {
+  private boolean canReadContactsPermisionGranted() {
     return getPermissionState(READ_CONTACTS) == PermissionState.GRANTED;
   }
 }

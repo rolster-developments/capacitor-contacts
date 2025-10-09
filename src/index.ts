@@ -6,5 +6,5 @@ const Contacts = registerPlugin<ContactsPlugin>('Contacts', {
 });
 
 export * from './definitions';
-export { setContactsMocks as setContactsWebData } from './web';
+export { setContactsMocks } from './web';
 export { Contacts };

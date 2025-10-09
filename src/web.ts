@@ -2,7 +2,7 @@ import { WebPlugin } from '@capacitor/core';
 import {
   Contact,
   ContactsPlugin,
-  HasPermissionsResult,
+  CheckPermissionResult,
   RequestResult
 } from './definitions';
 
@@ -21,7 +21,7 @@ export function setContactsMocks(mocks: Partial<ContactsMocks>): void {
 }
 
 export class ContactsWeb extends WebPlugin implements ContactsPlugin {
-  public hasPermissions(): Promise<HasPermissionsResult> {
+  public checkPermission(): Promise<CheckPermissionResult> {
     const { granted } = pluginMocks;
 
     return Promise.resolve({ granted });

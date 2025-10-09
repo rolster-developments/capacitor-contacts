@@ -19,7 +19,7 @@ export interface Contact {
   birthday?: string;
 }
 
-export interface HasPermissionsResult {
+export interface CheckPermissionResult {
   granted: boolean;
   readContacts?: string;
 }
@@ -29,6 +29,6 @@ export interface RequestResult {
 }
 
 export interface ContactsPlugin {
-  hasPermissions(): Promise<HasPermissionsResult>;
+  checkPermission(): Promise<CheckPermissionResult>;
   request(): Promise<RequestResult>;
 }
